@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Pro Calculator</title>
+<style>
+body{
+    font-family: Arial;
+    background:#0f172a;
+    color:white;
+    text-align:center;
+}
+.container{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+/* Calculator */
+.calculator{
+    background:#1e293b;
+    padding:20px;
+    border-radius:10px;
+}
+#display{
+    width:220px;
+    height:50px;
+    font-size:20px;
+    margin-bottom:10px;
+    text-align:right;
+}
+button{
+    width:50px;
+    height:50px;
+    margin:3px;
+    font-size:18px;
+    border:none;
+    border-radius:5px;
+}
+.num{background:#334155;color:white;}
+.op{background:#0ea5e9;color:white;}
+.eq{background:#22c55e;color:white;width:106px;}
+.clear{background:#ef4444;color:white;width:106px;}
+
+/* Converter */
+.converter{
+    background:#1e293b;
+    padding:20px;
+    border-radius:10px;
+}
+input, select{
+    padding:8px;
+    margin:5px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🚀 Pro Calculator Converter with piyush 2026</h1>
+
+<div class="container">
+
+<!-- Calculator -->
+<div class="calculator">
+<input type="text" id="display" disabled><br>
+
+<button class="num" onclick="add('7')">7</button>
+<button class="num" onclick="add('8')">8</button>
+<button class="num" onclick="add('9')">9</button>
+<button class="op" onclick="add('/')">/</button><br>
+
+<button class="num" onclick="add('4')">4</button>
+<button class="num" onclick="add('5')">5</button>
+<button class="num" onclick="add('6')">6</button>
+<button class="op" onclick="add('*')">*</button><br>
+
+<button class="num" onclick="add('1')">1</button>
+<button class="num" onclick="add('2')">2</button>
+<button class="num" onclick="add('3')">3</button>
+<button class="op" onclick="add('-')">-</button><br>
+
+<button class="num" onclick="add('0')">0</button>
+<button class="num" onclick="add('.')">.</button>
+<button class="op" onclick="add('+')">+</button><br>
+
+<button class="eq" onclick="calculate()">=</button>
+<button class="clear" onclick="clr()">C</button><br>
+
+<button class="op" onclick="sqrt()">√</button>
+<button class="op" onclick="percent()">%</button>
+
+</div>
+
+<!-- Converter -->
+<div class="converter">
+
+<h2>🌍 Converter</h2>
+
+<input type="number" id="val" placeholder="Value"><br>
+
+<select id="type">
+<option value="length">Length</option>
+<option value="weight">Weight</option>
+<option value="currency">Currency</option>
+</select><br>
+
+<select id="from"></select>
+<select id="to"></select><br>
+
+<button onclick="convert()">Convert</button>
+
+<h3 id="out"></h3>
+
+</div>
+
+</div>
+
+<script>
+
+// Calculator
+function add(v){ display.value += v; }
+function calculate(){ display.value = eval(display.value); }
+function clr(){ display.value=""; }
+function sqrt(){ display.value = Math.sqrt(display.value); }
+function percent(){ display.value = display.value/100; }
+
+// Units
+const data = {
+length:{m:1,cm:0.01,km:1000,inch:0.0254,feet:0.3048},
+weight:{g:1,kg:1000,mg:0.001},
+currency:{INR:1,USD:83,EUR:90,CNY:11.5}
+};
+
+// load dropdown
+function load(){
+let t = type.value;
+from.innerHTML="";
+to.innerHTML="";
+for(let k in data[t]){
+    from.innerHTML+=`<option>${k}</option>`;
+    to.innerHTML+=`<option>${k}</option>`;
+}
+}
+type.onchange=load;
+load();
+
+// convert
+function convert(){
+let v = val.value;
+let t = type.value;
+let f = from.value;
+let toVal = to.value;
+
+let base = v * data[t][f];
+let result = base / data[t][toVal];
+
+out.innerText="Result: "+result;
+}
+
+</script>
+
+</body>
+</html>
